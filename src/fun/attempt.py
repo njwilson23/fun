@@ -10,24 +10,24 @@ class _Try(object):
 class Success(_Try):
 
     def __init__(self, result):
-        self.value = result
+        self.result = result
 
-    def __str__(self):
-        return "Success({})".format(self.value)
+    def __repr__(self):
+        return "Success({})".format(repr(self.result))
 
     def map(self, fn):
-        return Try(fn(self.value))
+        return Try(fn(self.result))
 
 class Failure(_Try):
 
     def __init__(self, exc):
         self.exc = exc
 
-    def __str__(self):
+    def __repr__(self):
         return "Failure({})".format(type(self.exc))
 
     @property
-    def value(self):
+    def result(self):
         raise self.exc
 
     def map(self, fn):
