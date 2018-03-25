@@ -1,4 +1,6 @@
 
+from .option import Just, Nothing
+
 class _Try(object):
 
     def __call__(self, fn):
@@ -18,6 +20,12 @@ class Success(_Try):
     def map(self, fn):
         return Try(fn(self.result))
 
+    def handle_failure(self, handler):
+        return self
+
+    def to_option(self):
+        return Just(self.result)
+
 class Failure(_Try):
 
     def __init__(self, exc):
@@ -32,6 +40,13 @@ class Failure(_Try):
 
     def map(self, fn):
         return self
+
+    def handle_failure(self, handler):
+        handler(self)
+        return self
+
+    def to_option(self):
+        return Nothing
 
 # Constructor
 Try = _Try()
