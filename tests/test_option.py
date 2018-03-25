@@ -1,11 +1,10 @@
 import unittest
-
-from fun.option import Option, Something, Nothing
+from fun import Option, Just, Nothing
 
 class OptionTests(unittest.TestCase):
 
     def test_something(self):
-        something = Something("cat")
+        something = Just("cat")
         self.assertEqual(something.extract(), "cat")
 
     def test_nothing(self):
@@ -14,7 +13,7 @@ class OptionTests(unittest.TestCase):
             nothing.extract()
 
     def test_otherwise(self):
-        something = Something("cat")
+        something = Just("cat")
         self.assertEqual(something.otherwise("dog").extract(), "cat")
 
         nothing = Nothing

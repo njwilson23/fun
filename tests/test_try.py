@@ -1,6 +1,5 @@
 import unittest
-
-from fun.attempt import Try, Success, Failure
+from fun import Try, Success, Failure
 
 class TryTests(unittest.TestCase):
 

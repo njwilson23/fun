@@ -1,14 +1,12 @@
 import unittest
-
-from fun.list import List
-from fun.option import Option, Something, Nothing
+from fun import List, Option, Just, Nothing
 
 class ListTests(unittest.TestCase):
 
     def test_traverse(self):
         def effect(a):
             if a >= 0:
-                return Something(a*2)
+                return Just(a*2)
             return Nothing
         lst = List([1, 2, 3])
         traversed = lst.traverse(effect, Option)
@@ -21,7 +19,7 @@ class ListTests(unittest.TestCase):
     def test_empty_traverse(self):
         def effect(a):
             if a >= 0:
-                return Something(a*2)
+                return Just(a*2)
             return Nothing
         lst = List([])
         traversed = lst.traverse(effect, Option)
@@ -29,18 +27,18 @@ class ListTests(unittest.TestCase):
 
     def test_sequence(self):
         lst = List([
-            Something(1),
-            Something(2),
-            Something(3)
+            Just(1),
+            Just(2),
+            Just(3)
         ])
         sequenced = lst.sequence(Option)
         self.assertEqual(sequenced.extract(), List([1, 2, 3]))
 
     def test_sequence_nothing(self):
         lst = List([
-            Something(1),
+            Just(1),
             Nothing,
-            Something(3)
+            Just(3)
         ])
         sequenced = lst.sequence(Option)
         self.assertEqual(sequenced, Nothing)

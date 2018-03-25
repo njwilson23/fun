@@ -2,18 +2,18 @@
 class _Option(object):
 
     def __call__(self, value):
-        return Something(value)
+        return Just(value)
 
-class Something(_Option):
+class Just(_Option):
 
     def __init__(self, value):
         self.value = value
 
     def __repr__(self):
-        return "Something({})".format(repr(self.value))
+        return "Just({})".format(repr(self.value))
 
     def map(self, fn):
-        return Something(fn(self.value))
+        return Just(fn(self.value))
 
     def flat_map(self, fn):
         result = fn(self.value)
@@ -44,7 +44,7 @@ class _Nothing(_Option):
         return Nothing
 
     def otherwise(self, value):
-        return Something(value)
+        return Just(value)
 
     def extract(self):
         raise ValueError("cannot extract value from Nothing")
