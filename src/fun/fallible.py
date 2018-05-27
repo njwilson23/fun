@@ -20,7 +20,7 @@ class Success(_Try):
     def map(self, fn):
         return Try(fn(self.result))
 
-    def handle_failure(self, handler):
+    def on_failure(self, handler):
         return self
 
     def to_option(self):
@@ -41,8 +41,8 @@ class Failure(_Try):
     def map(self, fn):
         return self
 
-    def handle_failure(self, handler):
-        handler(self)
+    def on_failure(self, handler):
+        handler(self.exc)
         return self
 
     def to_option(self):

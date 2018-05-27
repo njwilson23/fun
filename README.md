@@ -5,6 +5,8 @@
 ## Example: transformations and side-effects
 
 ```python
+from fun import Just, Nothing
+
 def get_username():
     s = input()
     if len(s) != 0:
@@ -20,11 +22,11 @@ def lookup_image(profile_id):
     return image
 
 profile_img = (get_username()
-                .map(sanitize)              # Apply a transformation
-                .flat_map(Try(lambda name: lookup_image(name))                  # Inline a function that may
-                            .handle_failure(lambda exc: log.error(str(exc)))    # raise an exception, logging
-                            .to_option()                                        # any errors
+                .map(sanitize)                      # 1. Apply a transformation
+                .flat_map(Try(lookup_image))        # 2. Inline a function that may
+                            .on_failure(log.error)  #    raise an exception, logging
+                            .to_option()            #    any errors
                 )
-                .otherwise(PLACEHOLDER)     # Use a placeholder when no user image available
-                .extract())
+                .otherwise(PLACEHOLDER)             # 3. Use a placeholder when no user
+                .extract())                         #    image available
 ```
