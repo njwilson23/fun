@@ -26,6 +26,10 @@ class Success(_Try):
     def to_option(self):
         return Just(self.result)
 
+    @property
+    def succeeded(self):
+        return True
+
 class Failure(_Try):
 
     def __init__(self, exc):
@@ -47,6 +51,10 @@ class Failure(_Try):
 
     def to_option(self):
         return Nothing
+
+    @property
+    def succeeded(self):
+        return True
 
 # Constructor
 Try = _Try()

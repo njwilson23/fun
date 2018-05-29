@@ -14,10 +14,10 @@ class OptionTests(unittest.TestCase):
 
     def test_otherwise(self):
         something = Just("cat")
-        self.assertEqual(something.otherwise("dog").extract(), "cat")
+        self.assertEqual(something.otherwise("dog"), "cat")
 
         nothing = Nothing
-        self.assertEqual(nothing.otherwise("dog").extract(), "dog")
+        self.assertEqual(nothing.otherwise("dog"), "dog")
 
 if __name__ == "__main__":
     unittest.main()

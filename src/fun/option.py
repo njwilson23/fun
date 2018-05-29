@@ -24,7 +24,7 @@ class Just(_Option):
         return fn(self.value)
 
     def otherwise(self, value):
-        return self
+        return self.value
 
     def extract(self):
         return self.value
@@ -44,7 +44,7 @@ class _Nothing(_Option):
         return Nothing
 
     def otherwise(self, value):
-        return Just(value)
+        return value
 
     def extract(self):
         raise ValueError("cannot extract value from Nothing")
