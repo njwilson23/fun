@@ -12,5 +12,13 @@ class TryTests(unittest.TestCase):
         with self.assertRaises(ZeroDivisionError):
             result.result
 
+    def test_args(self):
+
+        def f(a, b, c=1):
+            return a + b - c
+
+        result = Try(f, 2, 4, c=5)
+        self.assertEqual(result.result, 1)
+
 if __name__ == "__main__":
     unittest.main()

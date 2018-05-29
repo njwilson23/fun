@@ -3,13 +3,16 @@ from .option import Just, Nothing
 
 class _Try(object):
 
-    def __call__(self, fn):
+    def __call__(self, fn, *args, **kwargs):
         try:
-            return Success(fn())
+            return Success(fn(*args, **kwargs))
         except Exception as e:
             return Failure(e)
 
-class Success(_Try):
+class Result(object):
+    pass
+
+class Success(Result):
 
     def __init__(self, result):
         self.result = result
@@ -30,7 +33,7 @@ class Success(_Try):
     def succeeded(self):
         return True
 
-class Failure(_Try):
+class Failure(Result):
 
     def __init__(self, exc):
         self.exc = exc
