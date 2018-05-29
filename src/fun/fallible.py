@@ -23,6 +23,9 @@ class Success(Result):
     def map(self, fn):
         return Try(fn(self.result))
 
+    def map_failure(self, etype, handler):
+        return self
+
     def on_failure(self, handler):
         return self
 
@@ -47,6 +50,12 @@ class Failure(Result):
 
     def map(self, fn):
         return self
+
+    def map_failure(self, etype, handler):
+        if isinstance(self.exc, etype):
+            return Try(handler, self.exc)
+        else:
+            return self
 
     def on_failure(self, handler):
         handler(self.exc)
