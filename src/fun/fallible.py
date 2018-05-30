@@ -23,6 +23,9 @@ class Success(Result):
     def map(self, fn):
         return Try(fn(self.result))
 
+    def flat_map(self, fn):
+        return fn(self.result)
+
     def map_failure(self, etype, handler):
         return self
 
@@ -35,6 +38,9 @@ class Success(Result):
     @property
     def succeeded(self):
         return True
+
+    def isa(self, etype):
+        return False
 
 class Failure(Result):
 
@@ -49,6 +55,9 @@ class Failure(Result):
         raise self.exc
 
     def map(self, fn):
+        return self
+
+    def flat_map(self, fn):
         return self
 
     def map_failure(self, etype, handler):
@@ -66,7 +75,10 @@ class Failure(Result):
 
     @property
     def succeeded(self):
-        return True
+        return False
+
+    def isa(self, etype):
+        return isinstance(self.exc, etype)
 
 # Constructor
 Try = _Try()
