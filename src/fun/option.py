@@ -20,7 +20,7 @@ class Just(_Option):
         if isinstance(result, _Option):
             return result
         else:
-            raise TypeError(f"expected Option, not {type(result)}")
+            raise TypeError("expected Option, not {}".format(type(result)))
         return fn(self.value)
 
     def otherwise(self, value):
