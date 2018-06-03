@@ -1,7 +1,7 @@
 
 from .option import Just, Nothing
 
-class _Try(object):
+class _Result(object):
 
     def __call__(self, fn, *args, **kwargs):
         try:
@@ -9,10 +9,7 @@ class _Try(object):
         except Exception as e:
             return Failure(e)
 
-class Result(object):
-    pass
-
-class Success(Result):
+class Success(_Result):
 
     def __init__(self, result):
         self.result = result
@@ -42,7 +39,7 @@ class Success(Result):
     def isa(self, etype):
         return False
 
-class Failure(Result):
+class Failure(_Result):
 
     def __init__(self, exc):
         self.exc = exc
@@ -81,4 +78,4 @@ class Failure(Result):
         return isinstance(self.exc, etype)
 
 # Constructor
-Try = _Try()
+Try = _Result()
