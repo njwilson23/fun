@@ -44,6 +44,19 @@ class Item(Equals):
     def set_mut(self, obj, value):
         obj[self.name] = value
 
+class _Iteration(Equals):
+    def __repr__(self):
+        return "[...]"
+
+    def __call__(self, obj):
+        return obj
+
+    def set_mut(self, obj, value):
+        [obj.pop(0) for _ in range(len(obj))]
+        [obj.append(v) for v in value]
+
+Iteration = _Iteration()
+
 class _Lens(object):
 
     def __init__(self, above, key):
@@ -64,23 +77,36 @@ class _Lens(object):
 
     def _getf(self, obj, f):
         def get_and_apply(sub):
-            return f(self.key(sub))
+            if self.key is Iteration:
+                return [f(a) for a in self.key(sub)]
+            else:
+                return f(self.key(sub))
         return self.above \
             .map(lambda above: above._getf(obj, get_and_apply)) \
             .otherwise(lambda: f(obj))
 
     def _setf(self, obj, f):
         def get_and_apply(sub):
-            return f(self.key(sub))
+            if self.key is Iteration:
+                return [f(a) for a in self.key(sub)]
+            else:
+                return f(self.key(sub))
         return self.above \
             .map(lambda above: above._setf(obj, replace(self.key, get_and_apply))) \
             .otherwise(lambda: f(obj))
+
+    @property
+    def for_all(self):
+        return _Lens(Just(self), Iteration)
 
     def get(self, obj):
         return self._getf(obj, identity)
 
     def set(self, obj, value):
-        return self._setf(obj, always(value))
+        return self.setf(obj, always(value))
+
+    def setf(self, obj, f):
+        return self._setf(obj, f)
 
 Lens = _Lens(Nothing, None)
 

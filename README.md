@@ -55,7 +55,7 @@ nested_dict = {
 }
 
 lens = Lens["address"]["street"]["name"]
-lens.set("baz")
+lens.set("baz")     # returns a modified copy
 
     {
         "address": {
@@ -66,6 +66,21 @@ lens.set("baz")
             }
         }
     }
+
+people = [
+    {"name": "alfonso", birthday: "April 1"},
+    {"name": "brie", birthday: "Oct 17"},
+    {"name": "clementine", birthday: "June 3"},
+]
+
+lens = Lens.for_all["birthday"]
+lens.get(people)
+
+    [
+        "April 1",
+        "Oct 17",
+        "June 3",
+    ]
 ```
 
 ## Limitations

@@ -48,12 +48,44 @@ class LensTests(unittest.TestCase):
         lens = Lens["address"]["number"]
         self.assertEqual(lens.set(value, 456), expected)
 
+    def test_setitem_func(self):
+        value = {"address": {"street": "Ferndale", "number": 123}}
+        expected = {"address": {"street": "Ferndale", "number": 124}}
+        lens = Lens["address"]["number"]
+        self.assertEqual(lens.setf(value, lambda a: a+1), expected)
+
     def test_compose(self):
         lens0 = Lens["address"]
         lens1 = Lens["number"]
         lens2 = compose_optics(lens0, lens1)
         self.assertEqual(lens2, Lens["address"]["number"])
 
+    def test_get_for_all(self):
+        value = [{"id": 0, "color": "red"},
+                 {"id": 1, "color": "blue"},
+                 {"id": 2, "color": "yellow"}]
+        lens = Lens.for_all["color"]
+        self.assertEqual(lens.get(value), ["red", "blue", "yellow"])
+
+    def test_set_for_all(self):
+        value = [{"id": 0, "color": "red"},
+                 {"id": 1, "color": "blue"},
+                 {"id": 2, "color": "yellow"}]
+        expected = [{"id": 0, "color": "apple"},
+                    {"id": 1, "color": "apple"},
+                    {"id": 2, "color": "apple"}]
+        lens = Lens.for_all["color"]
+        self.assertEqual(lens.set(value, "apple"), expected)
+
+    def test_setf_for_all(self):
+        value = [{"id": 0, "color": "red"},
+                 {"id": 1, "color": "blue"},
+                 {"id": 2, "color": "yellow"}]
+        expected = [{"id": 0, "color": "RED"},
+                    {"id": 1, "color": "BLUE"},
+                    {"id": 2, "color": "YELLOW"}]
+        lens = Lens.for_all["color"]
+        self.assertEqual(lens.setf(value, str.upper), expected)
 
 if __name__ == "__main__":
     unittest.main()
