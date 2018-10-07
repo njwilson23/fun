@@ -9,6 +9,9 @@ class Just(_Option):
     def __init__(self, value):
         self.value = value
 
+    def __eq__(self, other):
+        return isinstance(other, Just) and self.value == other.value
+
     def __repr__(self):
         return "Just({})".format(repr(self.value))
 
@@ -36,6 +39,9 @@ class _Nothing(_Option):
 
     def __init__(self):
         pass
+
+    def __eq__(self, other):
+        return other is Nothing
 
     def __repr__(self):
         return "Nothing"
