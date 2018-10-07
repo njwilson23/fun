@@ -1,9 +1,13 @@
 # fun - effects in Python
 
-`fun` is a peculiar way of writing Python promoting functions, monads, and
+`fun` is a peculiar way of writing Python promoting functions, expressions, and
 immutable data.
 
-`fun` is an experimental set of types that allow chaining functions.
+It provides:
+
+- an `Option` monad for values that may not exist
+- a `Result` monad for computations that may not be successful
+- a `Lens` DSL for getting and modifying values in nested structures
 
 ## Example: transformations and side-effects
 
