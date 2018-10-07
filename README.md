@@ -1,5 +1,8 @@
 # fun - effects in Python
 
+`fun` is a peculiar way of writing Python promoting functions, monads, and
+immutable data.
+
 `fun` is an experimental set of types that allow chaining functions.
 
 ## Example: transformations and side-effects
@@ -29,8 +32,39 @@ profile_img = (get_username()
                             .on_failure(log.error)  #    raise an exception, logging
                             .to_option()            #    any errors
                 )
-                .otherwise(PLACEHOLDER)             # 3. Use a placeholder when no user
-                .extract())                         #    image available, due to
-                                                    #    either bad input or an
-                                                    #    error
+                .extract_or_else(PLACEHOLDER)       # 3. Use a placeholder when no user
 ```
+
+## Example: optics
+
+```python
+from fun import Lens
+
+nested_dict = {
+    "address": {
+        "country": "foo",
+        "street": {
+            "name": "bar",
+            "number": 123
+        }
+    }
+}
+
+lens = Lens["address"]["street"]["name"]
+lens.set("baz")
+
+    {
+        "address": {
+            "country": "foo",
+            "street": {
+                "name": "baz",
+                "number": 123
+            }
+        }
+    }
+```
+
+## Limitations
+
+- Sometimes the syntax is awkward
+- If you're not careful, it's easy to blow through the recursion limit
