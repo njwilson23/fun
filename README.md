@@ -1,4 +1,4 @@
-# fun - effects in Python
+# fun - more functional Python
 
 `fun` is a peculiar way of writing Python promoting functions, expressions, and
 immutable data.
@@ -9,7 +9,7 @@ It provides:
 - a `Result` monad for computations that may not be successful
 - a `Lens` DSL for getting and modifying values in nested structures
 
-## Example: transformations and side-effects
+## Example: Transformations and Errors
 
 ```python
 from fun import Try, Just, Nothing
@@ -39,7 +39,7 @@ profile_img = (get_username()
                 .extract_or_else(PLACEHOLDER)       # 3. Use a placeholder when no user
 ```
 
-## Example: optics
+## Example: Optics
 
 ```python
 from fun import Lens
