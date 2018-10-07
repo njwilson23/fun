@@ -23,10 +23,13 @@ class Just(_Option):
             raise TypeError("expected Option, not {}".format(type(result)))
         return fn(self.value)
 
-    def otherwise(self, value):
+    def otherwise(self, fn):
         return self.value
 
     def extract(self):
+        return self.value
+
+    def extract_or_else(self, const):
         return self.value
 
 class _Nothing(_Option):
@@ -43,11 +46,14 @@ class _Nothing(_Option):
     def flat_map(self, fn):
         return Nothing
 
-    def otherwise(self, value):
-        return value
+    def otherwise(self, fn):
+        return fn()
 
     def extract(self):
         raise ValueError("cannot extract value from Nothing")
+
+    def extract_or_else(self, const):
+        return const
 
 Option = _Option()
 Nothing = _Nothing()
