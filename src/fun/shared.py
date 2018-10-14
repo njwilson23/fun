@@ -11,3 +11,6 @@ def always(a):
     def f(*_):
         return a
     return f
+
+def compose(fa, fb):
+    return lambda a: fa(fb(a))

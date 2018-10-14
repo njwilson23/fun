@@ -63,3 +63,16 @@ class _Nothing(_Option):
 
 Option = _Option()
 Nothing = _Nothing()
+
+def unit(a):
+    return Just(a)
+
+def sequence(lst):
+    # shitty implementation
+    result = []
+    for item in lst:
+        if item is Nothing:
+            return Nothing
+        else:
+            result.append(item.extract())
+    return Just(result)
