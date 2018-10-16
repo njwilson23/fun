@@ -1,7 +1,7 @@
-# fun - more functional Python
+# fun - hipster Python
 
-`fun` is a peculiar way of writing Python promoting functions, expressions, and
-immutable data.
+`fun` is a peculiar way of writing Python promoting expressions, composition,
+and immutable data.
 
 It provides:
 
