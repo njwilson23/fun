@@ -25,5 +25,15 @@ class CurryTests(unittest.TestCase):
         g = curry(f)
         self.assertEqual(g()(3), 4)
 
+    def test_decorator(self):
+
+        @curry
+        def f(a, b, c):
+            return a + b + c
+
+        pre = f(3)(4)
+        self.assertEqual(pre(5), 12)
+        self.assertEqual(pre(-2), 5)
+
 if __name__ == "__main__":
     unittest.main()
