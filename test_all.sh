@@ -4,6 +4,8 @@ echo "TEST: try"
 python tests/test_try.py
 echo "TEST: list"
 python tests/test_list.py
+echo "TEST: chain"
+python tests/test_chain.py
 echo "TEST: optics"
 python tests/test_optics.py
 echo "TEST: curry"
