@@ -6,8 +6,10 @@ and immutable data.
 It provides:
 
 - an `Option` monad for values that may not exist
-- a `Result` monad for computations that may not be successful
+- a `Result` type for computations that may not be successful
 - a `Lens` DSL for getting and modifying values in nested structures
+- a decorator for currying functions
+- immutable `List` and `Chain` collections
 
 ## Example: Transformations and Errors
 

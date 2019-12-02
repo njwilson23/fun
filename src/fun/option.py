@@ -35,6 +35,10 @@ class Just(_Option):
     def extract_or_else(self, const):
         return self.value
 
+    @property
+    def is_defined(self):
+        return True
+
 class _Nothing(_Option):
 
     def __init__(self):
@@ -60,6 +64,10 @@ class _Nothing(_Option):
 
     def extract_or_else(self, const):
         return const
+
+    @property
+    def is_defined(self):
+        return False
 
 Option = _Option()
 Nothing = _Nothing()
