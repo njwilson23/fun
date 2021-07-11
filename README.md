@@ -59,7 +59,7 @@ fib(0)(2000)(0)(1) # Raises RecursionError
 However, it'll fail with large numbers because the maximum stack depth is
 exceeded. But if we use the `F` class from `fun`, we can compute arbitrarily
 large numbers:
-```
+```python
 from fun import curry, F
 
 @curry
