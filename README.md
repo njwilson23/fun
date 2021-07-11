@@ -119,7 +119,8 @@ lens.get(people)
     ]
 ```
 
-## Limitations
+## Warning
 
-- Sometimes the syntax is awkward
-- If you're not careful, it's easy to blow through the recursion limit
+Mainstream programmers won't get it.
+
+Mustachio'd pure functional programmers will consider this weak sauce.
