@@ -1,21 +1,18 @@
 import dataclasses
-from typing import Any, Callable, Generic, TypeVar
+from typing import Any, Callable, Generic, Tuple, TypeVar
 
 T = TypeVar('T')
 U = TypeVar('U')
 
-# For type signatures
-class _F(Generic[T]): pass
-
-class F(_F[T]):
+class F(Generic[T]):
     @staticmethod
-    def pure(a: T) -> _F[T]:
+    def pure(a: T) -> 'F[T]':
         return Pure(a)
 
-    def bind(self, func: Callable[[Any], _F[U]]) -> _F[U]:
+    def bind(self, func: Callable[[Any], 'F[U]']) -> 'F[U]':
         return Bind(func, self)
 
-    def map(self, func: Callable[[T], U]) -> _F[U]:
+    def map(self, func: Callable[[T], U]) -> 'F[U]':
         """ Equivalent to self.bind(compose(F.pure, func)) """
         return Bind(lambda a: Pure(func(a)), self)
 
@@ -23,12 +20,12 @@ class F(_F[T]):
         return evaluate(self)
 
     @staticmethod
-    def flatten(func: Callable[[T], _F[U]], arg: _F[T]) -> _F[U]:
+    def flatten(func: Callable[[T], 'F[U]'], arg: 'F[T]') -> 'F[U]':
         """ Equivalent to arg.bind(func) """
         return Bind(func, arg)
 
     @staticmethod
-    def apply(func: Callable[[T], _F[U]], arg: T) -> _F[U]:
+    def apply(func: Callable[[T], 'F[U]'], arg: T) -> 'F[U]':
         """ Equivalent to F.pure(arg).map(func) """
         return Bind(func, Pure(arg))
 
@@ -38,8 +35,8 @@ class Pure(F[T]):
 
 @dataclasses.dataclass
 class Bind(F[U], Generic[T, U]):
-    func: Callable[[T], _F[U]]
-    over: _F[T]
+    func: Callable[[T], F[U]]
+    over: F[T]
 
 def evaluate(program):
     current = program

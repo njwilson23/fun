@@ -1,5 +1,4 @@
-
-class _Option(object):
+class _Option:
 
     def __call__(self, value):
         return Just(value)

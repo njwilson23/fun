@@ -1,5 +1,5 @@
 import functools
-from collections import Sequence
+from collections.abc import Sequence
 from . import Try
 from .shared import identity
 
