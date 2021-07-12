@@ -10,3 +10,5 @@ echo "TEST: optics"
 python tests/test_optics.py
 echo "TEST: curry"
 python tests/test_curry.py
+echo "TEST: recursion"
+python tests/test_recursion.py
