@@ -64,12 +64,12 @@ from fun import curry, F
 
 @curry
 def fibf(i, n, a, b):
-    if i == n - 1: return F.pure(b)
+    if i == n - 1: return F.value(b)
     else:
         def f(ab):
             a, b = ab
             return fibf(i + 1)(n)(b)(a + b)
-        return F.pure((a, b)).bind(f)
+        return F.value((a, b)).bind(f)
 
 fibf(0)(2000)(0)(1).evaluate()
 # 4224696333392304878706725602341482782579852840250681098010280137314308584370130707224123599639141511088446087538909603607640194711643596029271983312598737326253555802606991585915229492453904998722256795316982874482472992263901833716778060607011615497886719879858311468870876264597369086722884023654422295243347964480139515349562972087652656069529806499841977448720155612802665404554171717881930324025204312082516817125
@@ -119,8 +119,14 @@ lens.get(people)
     ]
 ```
 
-## Warning
+## Development
 
-Mainstream programmers won't get it.
 
-Mustachio'd pure functional programmers will consider this weak sauce.
+Typecheck with `mypy`:
+
+    mypy src/func/
+
+Run tests with `pytest`:
+
+    pytest tests/
+
